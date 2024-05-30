@@ -36,7 +36,8 @@ const updateCategory = async (req, res, next) => {
     }
 
     catch (err) {
-        res.status(404).send({ message: "Error with update category" })
+        res.setHeader("Content-Type", "application/json");
+    res.status(400).send(JSON.stringify({ message: "Ошибка обновления категории" }));
     }
 }
 
@@ -56,10 +57,21 @@ const deleteCategory = async (req, res, next) => {
         req.category = await categories.findByIdAndDelete(req.params.id);
         next();
     } catch (error) {
-        res.status(400).send({ message: "Error deleting category" });
+            res.setHeader("Content-Type", "application/json");
+        res.status(400).send(JSON.stringify({ message: "Ошибка удаления игры" }));
     }
 };
 
+const checkIsCategoryExists = async (req, res, next) => {
+  const isInArray = req.categoriesArray.find((category) => {
+    return req.body.name === category.name;
+  });
+  if (isInArray) {
+    res.setHeader("Content-Type", "application/json");
+        res.status(400).send(JSON.stringify({ message: "Категория с таким названием уже существует" }));
+  } else {
+    next();
+  }
+};
 
-
-module.exports = { findAllCategories, findCategoryById, createCategory, updateCategory, checkEmptyName, deleteCategory}
+module.exports = { findAllCategories,checkIsCategoryExists, findCategoryById, createCategory, updateCategory, checkEmptyName, deleteCategory}

@@ -13,7 +13,7 @@ const sendCategoryCreated = (req, res) => {
 //PUT
 const sendCategoryUpdated  = (req, res) => {
   res.setHeader('Content-Type', 'application/json');
-  res.end("User updated");
+  res.status(200).send(JSON.stringify({ message: "Категория обновлена" }));
 };
 
 const sendCategoryDeleted = (req, res) => {
@@ -22,4 +22,9 @@ const sendCategoryDeleted = (req, res) => {
 };
 
 
-module.exports = { sendAllCategories, sendCategoryCreated, sendCategoryUpdated, sendCategoryDeleted };
+const sendCategoryById = (req, res) => {
+  res.setHeader("Content-Type", "application/json");
+  res.end(JSON.stringify(req.category));
+};
+
+module.exports = { sendAllCategories, sendCategoryCreated, sendCategoryUpdated, sendCategoryDeleted, sendCategoryById };
