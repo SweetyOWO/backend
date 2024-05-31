@@ -1,8 +1,4 @@
-const allowedCors = [
-    'http://localhost:3000',
-    'http://front-alex.nomoredomainswork.ru',
-    'https://front-alex.nomoredomainswork.ru'
-];
+const allowedCors = [ 'https://front-alex.nomoredomainswork.ru' ];
 function cors(req, res, next) {
     const { origin } = req.headers;
 
